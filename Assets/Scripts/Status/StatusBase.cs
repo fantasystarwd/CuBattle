@@ -10,9 +10,16 @@ public abstract class StatusBase {
     {
         m_manager = input;
     }
-
+    /// <summary>
+    /// 狀態機進入前初始化用
+    /// </summary>
     public abstract void StateInitialize();
-    public abstract void StateUpdate();
+    /// <summary>
+    /// 狀態機釋放資源
+    /// </summary>
     public abstract void StateRelease();
-    public abstract void StateUpdate(int deltaTime);
+    /// <summary>
+    /// 狀態機依照每Frame更新資訊
+    /// </summary>
+    public abstract void StateUpdate(float deltaTime);
 }
