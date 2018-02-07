@@ -50,7 +50,8 @@ public class GameMainManager : MonoBehaviour
     void Start()
     {
         //
-        m_Instance = this;
+        if(m_Instance == null)
+            m_Instance = this;
 
         //建立所有狀態機
         m_StatusList = new List<StatusBase>();
