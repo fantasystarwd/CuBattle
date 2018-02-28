@@ -22,8 +22,22 @@ public class ScenesManager : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Start () {
+    public void SceneSwitchs()
+    {
+        /* EX:
+        if (Application.loadedLevelName == "UI")
+        {
+            Application.LoadLevel("GameScene");
+        }
+        else if (Application.loadedLevelName == "GameScene")
+        {
+            Application.LoadLevel("UI");
+        }
+        */
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
