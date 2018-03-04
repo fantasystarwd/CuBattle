@@ -139,4 +139,13 @@ public class GameMainManager : MonoBehaviour
     {
         return m_ActivePlayer;
     }
+
+    public Player GetPlayerById(int playerId)
+    {
+        for (int i = 0; i < 4 && m_PlayerList[i].GetId() == playerId; i++)
+        {
+            return m_PlayerList[i];
+        }
+        return new Player("");
+    }
 }
