@@ -12,7 +12,7 @@ public class UI : MonoBehaviour
     /// 5. 往前進入新的目標畫面必須記錄到List中。
     /// 6. 返回時，必須要將目前畫面從List紀錄中移除。
     /// </summary>
-    
+
     public GameObject startScreen;
     public string outTrigger;
     private List<GameObject> screenHistory;
@@ -20,7 +20,7 @@ public class UI : MonoBehaviour
     /// <summary>
     /// Initial and Record first UI
     /// </summary>
-    void awake()
+    void Awake()
     {
         this.screenHistory = new List<GameObject> { this.startScreen };
     }
@@ -29,25 +29,14 @@ public class UI : MonoBehaviour
     /// 要去哪個Screen
     /// 舉例: Loading、Victor、GoodGame、只要把弄好的UI拉進來就好
     /// </summary>
-    public void toScreen(GameObject target)
+    public void ToScreen(GameObject target)
     {
         GameObject current = this.screenHistory[this.screenHistory.Count - 1];
 
         if (target == null || target == current) return;
 
-        this.playScreen(current, target, false, this.screenHistory.Count);
+        this.PlayScreen(current, target, false, this.screenHistory.Count);
         this.screenHistory.Add(target);
-    }
-
-    public void goBack()
-    {
-        if (this.screenHistory.Count > 1)
-        {
-
-            int currentIndex = this.screenHistory.Count - 1;
-            this.playScreen(this.screenHistory[currentIndex], this.screenHistory[currentIndex - 1], true, currentIndex - 2);
-            this.screenHistory.RemoveAt(currentIndex);
-        }
     }
 
     /// <summary>
@@ -55,15 +44,33 @@ public class UI : MonoBehaviour
     /// 排序規則、動畫變更都丟這邊
     /// Coverage一併放在動畫裡!
     /// </summary>
-    public void playScreen(GameObject current,GameObject target,bool isBack,int order)
+    public void GoBack()
     {
-            
+        if (this.screenHistory.Count > 1)
+        {
+            int currentIndex = this.screenHistory.Count - 1;
+            this.PlayScreen(this.screenHistory[currentIndex], this.screenHistory[currentIndex - 1], true, currentIndex - 2);
+            this.screenHistory.RemoveAt(currentIndex);
+        }
     }
 
-    public void closeGame()
+    private void PlayScreen(GameObject current, GameObject target, bool isBack, int order)
     {
-        Application.Quit();
+        current.GetComponent<Animator>().SetTrigger(this.outTrigger);
+
+        if (isBack)
+        {
+            current.GetComponent<Canvas>().sortingOrder = order;
+        }
+        else
+        {
+            current.GetComponent<Canvas>().sortingOrder = order - 1;
+            target.GetComponent<Canvas>().sortingOrder = order;
+        }
+
+        target.SetActive(true);
     }
+
     // Use this for initialization
     void Start () {
 		
