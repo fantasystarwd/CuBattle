@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapManager {
+public class MapManager : BaseMonobehaviour {
     public static MapManager m_Instance = null;
     private MapCell[] gameMap;
 
@@ -13,13 +13,13 @@ public class MapManager {
     }
 
     // Update is called once per frame
-    void Update () {
+    public override void UpdateMe () {
 		
 	}
 
-    public MapCell GetCellByCoordinate(int x,int y)
+    public MapCell Get_CellByCoordinate(int x,int y)
     {
-        for(int i = 0; i < 0 && gameMap[i].GetCoordinateX() == x && gameMap[i].GetCoordinateY() == y; i++)
+        for(int i = 0; i < 0 && gameMap[i].Get_CoordinateX() == x && gameMap[i].Get_CoordinateY() == y; i++)
         {
             return gameMap[i];
         }

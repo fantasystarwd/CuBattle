@@ -9,17 +9,17 @@ public class Player {
     /// <summary>
     /// 玩家的名稱
     /// </summary>
-    private string m_Name;
+    private string mName;
 
     /// <summary>
     /// 玩家的遊戲編號
     /// </summary>
-    private int m_PlayerID;
+    private int mPlayerID;
 
     /// <summary>
     /// 玩家的現有分數
     /// </summary>
-    public int m_Point;
+    public int mPoint;
 
     /// <summary>
     /// 建立玩家的Constructor
@@ -28,22 +28,22 @@ public class Player {
     /// <param name="id">玩家的遊戲內id(默認為0)</param>
     public Player(string name,int id = 0)
     {
-        m_Name = name;
-        m_PlayerID = id;
-        m_Point = 0;
+        mName = name;
+        mPlayerID = id;
+        mPoint = 0;
     }
 
     /// <summary>
     /// 取得此位玩家的名稱
     /// </summary>
     /// <returns></returns>
-    public string GetName()
+    public string Get_Name()
     {
-        return m_Name;
+        return mName;
     }
 
-    public int GetId()
+    public int Get_Id()
     {
-        return m_PlayerID;
+        return mPlayerID;
     }
 }

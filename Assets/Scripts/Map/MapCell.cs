@@ -15,7 +15,7 @@ public class MapCell {
     };
 
     private int ownerId;
-    private MapCellStatus CellStatus = MapCellStatus.NONE;
+    private MapCellStatus cellStatus = MapCellStatus.NONE;
     private int occupyPoint;
     private int coordinateX;
     private int coordinateY;
@@ -25,12 +25,12 @@ public class MapCell {
 
     }
 
-    public int GetCoordinateX()
+    public int Get_CoordinateX()
     {
         return coordinateX;
     }
 
-    public int GetCoordinateY()
+    public int Get_CoordinateY()
     {
         return coordinateY;
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cube {
+public class Cube : BaseMonobehaviour {
     public static Cube m_Instance = null;
     /// <summary>
     /// 記錄所有方塊會使用到的動作
@@ -45,7 +45,7 @@ public class Cube {
     /// <summary>
     /// 用來釋放目前玩家所使用的方塊
     /// </summary>
-    public void ReleaseNowCube()
+    public void Release_Now_Cube()
     {
         canUseCube = null;
         GameObject.Destroy(activeCube);
@@ -55,7 +55,7 @@ public class Cube {
     /// 回傳當前玩家在使用的方塊物件
     /// </summary>
     /// <returns></returns>
-    public GameObject GetNowUseCube()
+    public GameObject Get_NowUseCube()
     {
         return activeCube;
     }
@@ -63,7 +63,7 @@ public class Cube {
     /// <summary>
     /// 當玩家要開始擺放方塊前須先進行初始化
     /// </summary>
-    public void InitPlayerCube()
+    public void Init_PlayerCube()
     {
         if(canUseCube != null)
         {
@@ -83,7 +83,7 @@ public class Cube {
     /// 用來處理當偵測到玩家有進行按鍵輸入時，方塊須執行的動作
     /// </summary>
     /// <param name="inputAction">當前玩家輸入的動作</param>
-    public void CubeActionDo(CubeAction inputAction)
+    public void Cube_ActionDo(CubeAction inputAction)
     {
         switch (inputAction)
         {

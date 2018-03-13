@@ -11,12 +11,12 @@ public class SetCubeStatus : StatusBase {
 
     public override void StateInitialize()
     {
-        Cube.m_Instance.InitPlayerCube();
+        Cube.m_Instance.Init_PlayerCube();
     }
 
     public override void StateRelease()
     {
-        Cube.m_Instance.ReleaseNowCube();
+        Cube.m_Instance.Release_Now_Cube();
     }
     public override void StateUpdate(float deltaTime)
     {

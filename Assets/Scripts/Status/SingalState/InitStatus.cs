@@ -13,7 +13,7 @@ public class InitStatus : StatusBase {
     public override void StateInitialize() {
 
 
-        GameMainManager.m_Instance.SetStatus(GameMainManager.GameStatus.STARTING);
+        GameMainManager.m_Instance.Set_Status(GameMainManager.GameStatus.STARTING);
     }
 
     public override void StateRelease()

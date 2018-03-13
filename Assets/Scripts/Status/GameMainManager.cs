@@ -2,9 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMainManager : MonoBehaviour
+public class GameMainManager : BaseMonobehaviour
 {
     public static GameMainManager m_Instance = null;
+
+    public static GameMainManager GetInstance()
+    {
+        if(m_Instance == null)
+        {
+            m_Instance = new GameMainManager();
+        }
+
+        return m_Instance;
+    }
     /// <summary>
     /// 紀錄狀態機中所有狀態的名稱
     /// </summary>
@@ -22,80 +32,82 @@ public class GameMainManager : MonoBehaviour
     /// <summary>
     /// 用於紀錄線下遊戲的狀態為何?
     /// </summary>
-    private GameStatus m_CurrentStatus = GameStatus.NONE;
+    private GameStatus mCurrentStatus = GameStatus.NONE;
 
     /// <summary>
     /// 用於保存當下正在使用的狀態機
     /// </summary>
-    private StatusBase m_ActiveStatus = null;
+    private StatusBase mActiveStatus = null;
 
     /// <summary>
     /// 用於紀錄遊戲中所有用到的狀態
     /// </summary>
-    private List<StatusBase> m_StatusList;
+    private List<StatusBase> mStatusList;
 
     /// <summary>
     /// 用於紀錄目前正在執行動作的玩家，目前正在考慮遇到多人時地處理方式
     /// </summary>
-    private Player m_ActivePlayer = null;
+    private Player mActivePlayer = null;
 
     /// <summary>
     /// 用於紀錄所有玩家的資料
     /// </summary>
-    private List<Player> m_PlayerList;
+    private List<Player> mPlayerList;
+
+    public override void AwakeMe()
+    {
+        Debug.Log("Awake!");
+    }
 
     /// <summary>
     /// Use this for initialization
     /// </summary>
-    void Start()
+    public override void StartMe()
     {
-        //
-        if(m_Instance == null)
-            m_Instance = this;
 
         //建立所有狀態機
-        m_StatusList = new List<StatusBase>();
+        mStatusList = new List<StatusBase>();
 
-        m_StatusList[(int)GameStatus.INIT] = new InitStatus(this);
-        m_StatusList[(int)GameStatus.STARTING] = new StartingStatus(this);
-        m_StatusList[(int)GameStatus.CHOOSEPROP] = new ChoosePropStatus(this);
-        m_StatusList[(int)GameStatus.SETPROP] = new SetPropStatus(this);
-        m_StatusList[(int)GameStatus.AWARD] = new AwardStatus(this);
-        m_StatusList[(int)GameStatus.SETCUBE] = new SetCubeStatus(this);
-        m_StatusList[(int)GameStatus.ENDGAME] = new EndGameStatus(this);
+        mStatusList[(int)GameStatus.INIT] = new InitStatus(this);
+        mStatusList[(int)GameStatus.STARTING] = new StartingStatus(this);
+        mStatusList[(int)GameStatus.CHOOSEPROP] = new ChoosePropStatus(this);
+        mStatusList[(int)GameStatus.SETPROP] = new SetPropStatus(this);
+        mStatusList[(int)GameStatus.AWARD] = new AwardStatus(this);
+        mStatusList[(int)GameStatus.SETCUBE] = new SetCubeStatus(this);
+        mStatusList[(int)GameStatus.ENDGAME] = new EndGameStatus(this);
 
         //建立所有玩家
-        m_PlayerList = new List<Player>(PlayerInitSetting.PlayerAmount);
+        mPlayerList = new List<Player>(PlayerInitSetting.PlayerAmount);
 
         for (int i = 0; i < PlayerInitSetting.PlayerAmount; i++)
         {
-            m_PlayerList[i] = new Player(PlayerInitSetting.PlayerName[i]);
+            mPlayerList[i] = new Player(PlayerInitSetting.PlayerName[i]);
         }
     }
 
     // Update is called once per frame
-    void Update()
+    public override void UpdateMe()
     {
-        m_ActiveStatus.StateUpdate(Time.deltaTime);
+        mActiveStatus.StateUpdate(Time.deltaTime);
     }
 
     /// <summary>
     /// 用於當前狀態機需要更換狀態的method
     /// </summary>
     /// <param name="state">接下來需要置換的狀態機</param>
-    public void SetStatus(GameStatus state)
+    public void Set_Status(GameStatus state)
     {
-        if (m_ActiveStatus != null)
+        if (mActiveStatus != null)
         {
-            m_ActiveStatus.StateRelease();
-            m_ActiveStatus = null;
+            mActiveStatus.StateRelease();
+            mActiveStatus = null;
         }
 
-        if (m_StatusList[(int)state] != null)
+        if (mStatusList[(int)state] != null)
         {
-            m_ActiveStatus = m_StatusList[(int)state];
-            m_ActiveStatus.StateInitialize();
-            m_CurrentStatus = state;
+            mActiveStatus = mStatusList[(int)state];
+            mActiveStatus.StateInitialize();
+            mCurrentStatus = state;
         }
     }
 
@@ -103,21 +115,21 @@ public class GameMainManager : MonoBehaviour
     /// 用於更改當前正在操作的玩家
     /// </summary>
     /// <param name="name"></param>
-    public void SetPlayer(string name)
+    public void Set_Player(string name)
     {
         for (int i = 0; i < 4; i++)
         {
-            if (name == m_PlayerList[i].GetName())
+            if (name == mPlayerList[i].Get_Name())
             {
-                m_PlayerList[i] = m_ActivePlayer;
+                mPlayerList[i] = mActivePlayer;
             }
         }
 
         for (int i = 0; i < 4; i++)
         {
-            if(name == m_PlayerList[i].GetName())
+            if(name == mPlayerList[i].Get_Name())
             {
-                m_ActivePlayer = m_PlayerList[i];
+                mActivePlayer = mPlayerList[i];
             }
         }
     }
@@ -126,26 +138,26 @@ public class GameMainManager : MonoBehaviour
     /// 取得目前正在執行的狀態
     /// </summary>
     /// <returns></returns>
-    public GameStatus GetCurrentState()
+    public GameStatus Get_CurrentState()
     {
-        return m_CurrentStatus;
+        return mCurrentStatus;
     }
 
     /// <summary>
     /// 取得目前正在執行動作的玩家
     /// </summary>
     /// <returns></returns>
-    public Player GetCurrentPlayer()
+    public Player Get_CurrentPlayer()
     {
-        return m_ActivePlayer;
+        return mActivePlayer;
     }
 
-    public Player GetPlayerById(int playerId)
+    public Player Get_PlayerById(int playerId)
     {
-        for (int i = 0; i < 4 && m_PlayerList[i].GetId() == playerId; i++)
+        for (int i = 0; i < 4 && mPlayerList[i].Get_Id() == playerId; i++)
         {
-            return m_PlayerList[i];
+            return mPlayerList[i];
         }
-        return new Player("");
+        return null;
     }
 }
