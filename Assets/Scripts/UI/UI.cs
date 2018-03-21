@@ -29,13 +29,13 @@ public class UI : MonoBehaviour
     /// 要去哪個Screen
     /// 舉例: Loading、Victor、GoodGame、只要把弄好的UI拉進來就好
     /// </summary>
-    public void ToScreen(GameObject target)
+    public void To_Screen(GameObject target)
     {
         GameObject current = this.screenHistory[this.screenHistory.Count - 1];
 
         if (target == null || target == current) return;
 
-        this.PlayScreen(current, target, false, this.screenHistory.Count);
+        this.Play_Screen(current, target, false, this.screenHistory.Count);
         this.screenHistory.Add(target);
     }
 
@@ -44,17 +44,17 @@ public class UI : MonoBehaviour
     /// 排序規則、動畫變更都丟這邊
     /// Coverage一併放在動畫裡!
     /// </summary>
-    public void GoBack()
+    public void Go_Back()
     {
         if (this.screenHistory.Count > 1)
         {
             int currentIndex = this.screenHistory.Count - 1;
-            this.PlayScreen(this.screenHistory[currentIndex], this.screenHistory[currentIndex - 1], true, currentIndex - 2);
+            this.Play_Screen(this.screenHistory[currentIndex], this.screenHistory[currentIndex - 1], true, currentIndex - 2);
             this.screenHistory.RemoveAt(currentIndex);
         }
     }
 
-    private void PlayScreen(GameObject current, GameObject target, bool isBack, int order)
+    private void Play_Screen(GameObject current, GameObject target, bool isBack, int order)
     {
         current.GetComponent<Animator>().SetTrigger(this.outTrigger);
 
